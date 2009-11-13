@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Google AJAX Search API Sample</title>
+    
+    <script src="http://www.google.com/jsapi?key=ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q"></script>
+    <script type="text/javascript">
+    /*
+    *  How to draw results in tabbed mode.
+    */
+    
+    google.load('search', '1');
+    
+    function OnLoad() {
+    
+      // create a tabbed mode search control
+      var tabbed = new google.search.SearchControl();
+      
+      // Set the Search Control to get the most number of results
+      tabbed.setResultSetSize(google.search.Search.LARGE_RESULTSET);
+      
+    
+      // create our searchers.  There will now be 3 tabs.
+      var webSearch = new google.search.WebSearch();
+
+      var extendedArgs = google.search.Search.RESTRICT_EXTENDED_ARGS;
+      webSearch.setRestriction(extendedArgs, {lr:'lang_is'});
+      
+      tabbed.addSearcher(webSearch);
+      tabbed.addSearcher(new google.search.BlogSearch());
+      tabbed.addSearcher(new google.search.NewsSearch());
+    
+      // draw in tabbed layout mode
+      var drawOptions = new google.search.DrawOptions();
+      drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+    
+      // Draw the tabbed view in the content div
+      tabbed.draw(document.getElementById("content"), drawOptions);
+    
+      // Search!
+      <% unless @query.nil? %>
+      tabbed.execute("<%= @query %>");
+      <% end %>
+    }
+    google.setOnLoadCallback(OnLoad);
+    </script>
+    
+    <style type="text/css">
+       /* bold the section header */
+       .gsc-title { font-weight : bold; }
+       /* Hide Search box. You can leave the search box shown to check that Tags were extracted correctly */
+       form.gsc-search-box { display:none; } 
+       /* Hide and the paging box */
+       .gsc-control{width:100%; !important}     
+       .lsb {
+       font-family:arial,sans-serif;
+       font-size:15px;
+       height:1.85em;
+       vertical-align:middle;
+       }
+       .lst {
+       font-family:arial,sans-serif;
+       font-size:17px;
+       vertical-align:middle;
+       }
+    </style>
+  </head>
+  <body style="font-family: Arial;border: 0 none; margin:20px;">
+    <%# No search query  %>
+    <% if @query.nil? || @query.empty? %>
+      <div style="margin-left:auto;margin-right:auto;width:460px; margin-top:60px;">
+      <div style="font-size:17px; height:1.85em;vertical-align:middle;text-align:center; width:460px;">Leitarorðið</div>
+      <form action="/search" style="margin-top:50px; margin-bottom:30px;">
+        <input class="lst" type="text" title="Leita" value="<%= @query %>" maxlength="2048" size="41" name="q"/>
+        <input class="lsb" type="submit" value="Leita" style="margin: 0pt 2px 0pt 5px;" name="btnG"/><br/>
+        <div style="font-size:small; margin-top:2px;">
+          <input id="all" type="radio" <%= radio_checked?('ordmyndir',params) %> value="ordmyndir" name="lr"/>
+          <label for="all"> Leita að öllum orðmyndum </label>
+          <input id="il" type="radio" <%= radio_checked?('plain',params) %> value="plain" name="lr"/>
+          <label for="il"> Einföld leit, án orðmynda </label>
+        </div>
+      </form>
+      </div>
+    <% else %>
+      <span style="font-size:17px; height:1.85em;vertical-align:middle; float:left;">Leitarorðið:</span>
+      <form action="/search/" style="margin-top:50px; margin-bottom:30px;">
+        <input class="lst" type="text" title="Leita" value="<%= @original_query %>" maxlength="2048" size="41" name="q"/>
+        <input class="lsb" type="submit" value="Leita" style="margin: 0pt 2px 0pt 5px;" name="btnG"/><br/>
+        <div style="font-size:small; margin-top:2px;">
+        <input id="all" type="radio" <%= radio_checked?('ordmyndir',params) %> value="ordmyndir" name="lr"/>
+        <label for="all"> Leita að öllum orðmyndum </label>
+        <input id="il" type="radio" <%= radio_checked?('plain',params) %> value="plain" name="lr"/>
+        <label for="il"> Einföld leit, án orðmynda </label>
+        </div>
+      </form>
+      Leitaði að: <%= @query_human_view %><br/><br/>
+    <% end %>
+    
+    <div id="content">Loading...</div>
+    
+    <div style="text-align:center; margin-top:300px; font-size:small;">
+      Höfundur: <%= link_to "Geir Freysson", 'http://geirfreysson.com' %> - Framlag í samkeppni um notkun á gögnum um beygingarlýsingu íslensks nútímamáls - <%= link_to 'Orðið.is', "http://ordid.is" %><br/><br/>
+      Kóðinn að verkefninu er opinn og er hýstur á <%= link_to "Github", 'http://github.com/geirfreysson/Leitarordid' %>.
+    </div>
+    
+  </body>
+</html>
+​
