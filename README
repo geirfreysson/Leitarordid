@@ -2,5 +2,13 @@
 
 Licence: GPL
 
-Will be hosted on http://leitarord.geirfreysson.com
+Hosted on http://leitarordid.geirfreysson.com
+
+Works best when searching for a single word. For example, the difference in the results for "tilraun" (test)
+
+All word forms:
+http://leitarordid.geirfreysson.com/search/?q=tilraun&btnG=Leita&lr=ordmyndir
+
+Without all word forms:
+http://leitarordid.geirfreysson.com/search/?q=tilraun&btnG=Leita&lr=plain
 
