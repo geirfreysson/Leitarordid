@@ -12,3 +12,8 @@ http://leitarordid.geirfreysson.com/search/?q=tilraun&btnG=Leita&lr=ordmyndir
 Without all word forms:
 http://leitarordid.geirfreysson.com/search/?q=tilraun&btnG=Leita&lr=plain
 
+== Setup
+
+The database uses the "Sigrúnarsnið" database (http://ordid.is/gogn) but in order to make it work with the Rails app, the following line is appended to the sql dump (I recommend using vim, it's a large file):
+
+ALTER TABLE bin ADD id int(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (id);
