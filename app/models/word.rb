@@ -14,6 +14,24 @@ class Word < ActiveRecord::Base
     end
   end
   
+  #if the word is is definite article, only return definite article etc.
+  def self.find_related_words_keep_article(word,exclude=[])
+    w = Word.find_by_beygingarmynd(word)
+    if w.nil?
+      []
+    else
+      #all words that have the same word id as the search term
+      related = Word.find_all_by_wordid_and_hluti(w.wordid,w.hluti)
+      if w.greiningarstrengur.index /gr/
+        related = related.select{|i| i.greiningarstrengur =~ /gr/}
+      elsif w.greiningarstrengur.index(/gr/).nil?
+        related = related.select{|i| i.greiningarstrengur !~ /gr/}
+      end
+      related.reject!{|i| exclude.include? i.ordflokkur}
+      related.map{|i| i.beygingarmynd}
+    end
+  end
+  
   def self.find_root(word,related)
     for w in related
       if w.beygingarmynd == w.uppflettiord
