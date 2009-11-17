@@ -22,10 +22,10 @@ class Word < ActiveRecord::Base
     else
       #all words that have the same word id as the search term
       related = Word.find_all_by_wordid_and_hluti(w.wordid,w.hluti)
-      if w.greiningarstrengur.index /gr/
-        related = related.select{|i| i.greiningarstrengur =~ /gr/}
-      elsif w.greiningarstrengur.index(/gr/).nil?
-        related = related.select{|i| i.greiningarstrengur !~ /gr/}
+      if w.greiningarstrengur.index /ET/
+        related = related.select{|i| i.greiningarstrengur =~ /ET/}
+      elsif w.greiningarstrengur.index /FT/
+        related = related.select{|i| i.greiningarstrengur =~ /FT/}
       end
       related.reject!{|i| exclude.include? i.ordflokkur}
       related.map{|i| i.beygingarmynd}
