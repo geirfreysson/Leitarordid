@@ -21,6 +21,7 @@ class SearchController < ApplicationController
   end
   
   def twitter
+    @tweets = []
     unless params[:q].nil?
       @client = TwitterSearch::Client.new('leitarordid.geirfreysson.com')
       @downsized = []
