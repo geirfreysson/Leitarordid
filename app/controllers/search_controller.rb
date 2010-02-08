@@ -11,7 +11,6 @@ class SearchController < ApplicationController
         query_strings.each do |qs|
           query_array << Word.find_related_words_keep_article(qs)
         end
-        logger.debug { "quary_array" + query_array.inspect }
         @query_human_view = query_array.flatten.uniq.join(" ")
         @query = query_array.flatten.join(" OR ").gsub(/['"]/,"")
       else
@@ -35,10 +34,18 @@ class SearchController < ApplicationController
         @query_human_view = query_array.flatten.uniq.join(" ")
         @query = query_array.flatten.uniq
         @query = downsize(@query)
-        @tweets = @client.query(@query)
+        if @query.size > 0
+          @tweets = @client.query(:q=>@query, :rpp => '50')
+        else
+          @tweets = []
+        end
       else
         @original_query = @query = @query_human_view = params[:q].gsub(/['"]/,"")
-        @tweets = @client.query(params[:q])
+        if @query.size > 0
+          @tweets = @client.query(:q=>@query, :rpp => '50')
+        else
+          @tweets = []
+        end
       end
     end
   end
