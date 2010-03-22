@@ -17,6 +17,7 @@ class SearchController < ApplicationController
       else
         @original_query = @query = @query_human_view = params[:q].gsub(/['"]/,"")
       end
+      @description = "Leitaði í Google að: #{@query_human_view}"
     end
   end
   
@@ -37,6 +38,7 @@ class SearchController < ApplicationController
         @query = downsize(@query)
         if @query.size > 0
           @title = "#{params[:q]} - Twitter leitarniðurstöður í öllum orðmyndum"
+          @description = "Leitaði á Twitter að: #{@query_human_view}"
           @tweets = @client.query(:q=>@query, :rpp => '50')
         else
           @tweets = []
@@ -47,6 +49,7 @@ class SearchController < ApplicationController
         @original_query = @query = @query_human_view = params[:q].gsub(/['"]/,"")
         if @query.size > 0
           @tweets = @client.query(:q=>@query, :rpp => '50')
+          @description = "Leitaði á Twitter að: #{@query_human_view}"
         else
           @tweets = []
         end
