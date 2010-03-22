@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>Leitarorðið</title>
+    <title><%= @title || "Leitarorðið" %></title>
     
     <script src="http://www.google.com/jsapi?key=ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q"></script>
     <script type="text/javascript">
@@ -96,7 +96,22 @@
         <label for="il"> Einföld leit, án orðmynda </label>
         </div>
       </form>
-      Leitaði að: <%= @query_human_view %><br/><br/>
+      <div class="googleads">
+         <script type="text/javascript"><!--
+         google_ad_client = "pub-2030142191983054";
+         /* Leitarordid 728x90, created 22/03/10 */
+         google_ad_slot = "6434173179";
+         google_ad_width = 728;
+         google_ad_height = 90;
+         //-->
+         </script>
+         <script type="text/javascript"
+         src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+         </script>
+       </div>
+      <div style="font-weight:bold; margin-top:10px;">Leitaði að: <%= @query_human_view %></div>
+      <div style="margin-top:4px;margin-bottom:4px; font-size:0.8em;"><a name="fb_share" type="icon_link" href="http://www.facebook.com/sharer.php">Deila með Facebook vinum</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script></div>
+      <br/>
     <% end %>
     
     <div id="content">Loading...</div>

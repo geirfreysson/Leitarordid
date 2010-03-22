@@ -5,6 +5,7 @@ class SearchController < ApplicationController
   def index
     unless params[:q].nil?
       if params[:lr]=='ordmyndir' && params[:q] !=~ /[^\w ]/
+        @title = "#{params[:q]} - Google leitarniðurstöður í öllum orðmyndum"
         @original_query = params[:q]
         query_strings = params[:q].split(" ")
         query_array = Array.new(query_strings)
@@ -35,11 +36,14 @@ class SearchController < ApplicationController
         @query = query_array.flatten.uniq
         @query = downsize(@query)
         if @query.size > 0
+          @title = "#{params[:q]} - Twitter leitarniðurstöður í öllum orðmyndum"
           @tweets = @client.query(:q=>@query, :rpp => '50')
         else
           @tweets = []
         end
       else
+        @title = "Leitarorðið - Leitaði að #{params[:q]}"
+        
         @original_query = @query = @query_human_view = params[:q].gsub(/['"]/,"")
         if @query.size > 0
           @tweets = @client.query(:q=>@query, :rpp => '50')
