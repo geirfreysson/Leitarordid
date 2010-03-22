@@ -92,6 +92,7 @@
     <% end %>
         
     </div>
+    <% if !@tweets.nil? && @tweets.size > 0 %>
     <div class="googleads" style="margin-top:50px;">
        <script type="text/javascript"><!--
        google_ad_client = "pub-2030142191983054";
@@ -105,7 +106,7 @@
        src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
        </script>
      </div>
-    
+    <% end %>
     <div style="text-align:center; margin-top:200px; font-size:small;">
       Höfundur: <%= link_to "Geir Freysson", 'http://geirfreysson.com' %> - Framlag í samkeppni um notkun á gögnum um beygingarlýsingu íslensks nútímamáls - <%= link_to 'Orðið.is', "http://ordid.is" %><br/><br/>
       Kóðinn að verkefninu er opinn og er hýstur á <%= link_to "Github", 'http://github.com/geirfreysson/Leitarordid' %>.
